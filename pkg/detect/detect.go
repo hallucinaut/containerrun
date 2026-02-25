@@ -2,6 +2,7 @@
 package detect
 
 import (
+	"fmt"
 	"math"
 	"time"
 )
@@ -119,7 +120,7 @@ func (d *Detector) checkCPUAnomaly(containerID string, current, baseline float64
 			Type:        TypeResource,
 			Severity:    getSeverity(zScore),
 			Description: "CPU usage anomaly detected",
-			Evidence:    "Current: " + string(rune(int(current*100)+48)) + "%, Baseline: " + string(rune(int(baseline*100)+48)) + "%",
+			Evidence:    "Current: " + fmt.Sprintf("%.0f%%", current*100) + "%, Baseline: " + fmt.Sprintf("%.0f%%", baseline*100) + "%",
 			Confidence:  math.Min(zScore/3.0, 1.0),
 			Timestamp:   time.Now(),
 			Recommendation: "Investigate high CPU usage",
@@ -144,7 +145,7 @@ func (d *Detector) checkMemoryAnomaly(containerID string, current, baseline floa
 			Type:        TypeResource,
 			Severity:    getSeverity(zScore),
 			Description: "Memory usage anomaly detected",
-			Evidence:    "Current: " + string(rune(int(current*100)+48)) + "MB, Baseline: " + string(rune(int(baseline*100)+48)) + "MB",
+			Evidence:    "Current: " + fmt.Sprintf("%.0f%%", current*100) + "MB, Baseline: " + fmt.Sprintf("%.0f%%", baseline*100) + "MB",
 			Confidence:  math.Min(zScore/3.0, 1.0),
 			Timestamp:   time.Now(),
 			Recommendation: "Check for memory leaks",
@@ -169,7 +170,7 @@ func (d *Detector) checkNetworkAnomaly(containerID string, current, baseline flo
 			Type:        TypeNetwork,
 			Severity:    getSeverity(zScore),
 			Description: "Network activity anomaly detected",
-			Evidence:    "Current: " + string(rune(int(current*100)+48)) + "MB/s, Baseline: " + string(rune(int(baseline*100)+48)) + "MB/s",
+			Evidence:    "Current: " + fmt.Sprintf("%.0f%%", current*100) + "MB/s, Baseline: " + fmt.Sprintf("%.0f%%", baseline*100) + "MB/s",
 			Confidence:  math.Min(zScore/3.0, 1.0),
 			Timestamp:   time.Now(),
 			Recommendation: "Monitor network traffic for suspicious activity",
@@ -219,7 +220,7 @@ func DetectBehavioralAnomalies(containerID string, behaviorHistory []BehaviorDat
 				Type:        TypeBehavioral,
 				Severity:    getSeverity(zScore),
 				Description: "Behavioral pattern deviation detected",
-				Evidence:    "Deviation: " + string(rune(int(zScore*100)+48)) + "%",
+				Evidence:    "Deviation: " + fmt.Sprintf("%.0f%%", zScore*100) + "%",
 				Confidence:  math.Min(zScore/3.0, 1.0),
 				Timestamp:   time.Now(),
 				Recommendation: "Review container behavior patterns",
@@ -277,7 +278,7 @@ func GenerateAnomalyReport(anomalies []ContainerAnomaly) string {
 			report += "[" + string(rune(i+49)) + "] " + anomaly.Severity + " - " + anomaly.Description + "\n"
 			report += "    Container: " + anomaly.ContainerID + "\n"
 			report += "    Type: " + string(anomaly.Type) + "\n"
-			report += "    Confidence: " + string(rune(int(anomaly.Confidence*100)+48)) + "%\n"
+			report += "    Confidence: " + fmt.Sprintf("%.0f%%", anomaly.Confidence*100) + "%\n"
 			report += "    Recommendation: " + anomaly.Recommendation + "\n\n"
 		}
 	}
