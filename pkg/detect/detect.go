@@ -192,14 +192,6 @@ func getSeverity(zScore float64) string {
 }
 
 // randomString generates a random string.
-func randomString(length int) string {
-	const chars = "abcdefghijklmnopqrstuvwxyz0123456789"
-	result := make([]byte, length)
-	for i := range result {
-		result[i] = chars[i%len(chars)]
-	}
-	return string(result)
-}
 
 // DetectBehavioralAnomalies detects behavioral anomalies.
 func DetectBehavioralAnomalies(containerID string, behaviorHistory []BehaviorData) []ContainerAnomaly {

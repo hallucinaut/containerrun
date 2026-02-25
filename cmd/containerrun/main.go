@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/hallucinaut/containerrun/pkg/monitor"
 	"github.com/hallucinaut/containerrun/pkg/detect"
@@ -62,7 +63,7 @@ Commands:
 Examples:
   containerrun monitor mycontainer
   containerrun detect mycontainer
-`, "containerrun")
+`,)
 }
 
 func monitorContainer(containerID string) {
